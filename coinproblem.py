@@ -24,24 +24,20 @@
 
 #Implementation:
 def coinChange(coins, amount):
-    # Initialize DP array with infinity for all amounts
+
     dp = []
 
     for k in range(0, amount+1):
         dp.append(float('inf'))
 
-    # Base case: 0 coins needed for amount 0
     dp[0] = 0
 
-    # Fill DP table for each amount from 1 to target
     for j in range(1, amount+1):
-        # Try each coin denomination
         for coin in coins:
-            if coin <= j:  # Can use this coin
-                # Update with minimum coins needed
+            if coin <= j:
                 dp[j] = min(dp[j], 1 + dp[j - coin])
         
-    # Return result: -1 if impossible, otherwise min coins needed
+
     if dp[amount] != float('inf'):
         return dp[amount]
     
