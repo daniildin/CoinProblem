@@ -19,11 +19,38 @@
 # [3,4,7], amount = 24 -> O: 4
 # [1,4,2], amount = 8 -> O: 2
 
-#Time Complexity: O(2^n)
+#Time Complexity: O(amount * len(coins))
 
 
 #Implementation:
 def coinChange(coins, amount):
+    # Initialize DP array with infinity for all amounts
+    dp = []
+
+    for k in range(0, amount+1):
+        dp.append(float('inf'))
+
+    # Base case: 0 coins needed for amount 0
+    dp[0] = 0
+
+    # Fill DP table for each amount from 1 to target
+    for j in range(1, amount+1):
+        # Try each coin denomination
+        for coin in coins:
+            if coin <= j:  # Can use this coin
+                # Update with minimum coins needed
+                dp[j] = min(dp[j], 1 + dp[j - coin])
+        
+    # Return result: -1 if impossible, otherwise min coins needed
+    if dp[amount] != float('inf'):
+        return dp[amount]
+    
+    else:
+        return -1
+    
+
+    
+    """
         if amount == 0:
             return 0
         if amount < 0:
@@ -35,7 +62,9 @@ def coinChange(coins, amount):
                 q = min(q, 1 + result)
         if q != float('inf'):
             return q
-        else: return -1
+        else: return -1"""
+
+    
 
 
 #Test Cases:
@@ -50,9 +79,8 @@ print(coinChange(l2,amount2))  #--> 2
 
 
 
-        
 
-        
 
-        
-        
+
+
+
